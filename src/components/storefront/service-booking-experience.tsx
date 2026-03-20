@@ -69,10 +69,17 @@ function buildCalendarDays(dates: string[]) {
   return days;
 }
 
-export function ServiceBookingExperience({ service }: { service: Service }) {
+export function ServiceBookingExperience({
+  service,
+  initialStylistId,
+}: {
+  service: Service;
+  initialStylistId?: string;
+}) {
   const pushToast = useToastStore((state) => state.pushToast);
   const setBooking = useServiceBookingStore((state) => state.setBooking);
-  const [selectedStylistId, setSelectedStylistId] = useState(service.stylists[0]?.id ?? "");
+  const hasPrefilledStylist = Boolean(initialStylistId && service.stylists.some((stylist) => stylist.id === initialStylistId));
+  const [selectedStylistId, setSelectedStylistId] = useState(hasPrefilledStylist ? initialStylistId ?? "" : (service.stylists[0]?.id ?? ""));
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedSlotId, setSelectedSlotId] = useState("");
   const [customerName, setCustomerName] = useState("");
@@ -154,52 +161,70 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
       <div className="space-y-6">
         <div className="panel rounded-[30px] p-6">
           <p className="text-xs uppercase tracking-[0.3em] text-[var(--veloura-accent)]">Step 1</p>
-          <h2 className="mt-3 font-display text-3xl text-[var(--veloura-text)] md:text-4xl">Choose your hairdresser.</h2>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--veloura-muted)]">Pick the stylist whose finish, reviews, and style direction feel right for you.</p>
-          <div className="mt-6 grid gap-4 lg:grid-cols-3">
-            {service.stylists.map((stylist) => {
-              const isActive = stylist.id === selectedStylistId;
-              return (
-                <div
-                  key={stylist.id}
-                  className={`rounded-[24px] border p-4 transition ${
-                    isActive ? "border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)]"
-                  }`}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="relative h-16 w-16 overflow-hidden rounded-[18px] border border-[var(--veloura-line)]">
-                      <Image src={stylist.image} alt={stylist.name} fill className="object-cover" sizes="64px" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-base text-[var(--veloura-text)]">{stylist.name}</p>
-                      <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">{stylist.title}</p>
-                      <div className="mt-3 flex items-center gap-3">
-                        <RatingStars rating={stylist.rating} />
-                        <p className="text-sm text-[var(--veloura-text)]">{stylist.rating.toFixed(1)}</p>
+          <h2 className="mt-3 font-display text-3xl text-[var(--veloura-text)] md:text-4xl">{hasPrefilledStylist ? "Your selected hairdresser." : "Choose your hairdresser."}</h2>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--veloura-muted)]">
+            {hasPrefilledStylist ? "You already picked your stylist, so you can continue straight into the calendar and lock your slot." : "Pick the stylist whose finish, reviews, and style direction feel right for you."}
+          </p>
+          {hasPrefilledStylist && selectedStylist ? (
+            <div className="mt-6 rounded-[24px] border border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.08)] p-4">
+              <div className="flex items-start gap-4">
+                <div className="relative h-20 w-20 overflow-hidden rounded-[20px] border border-[var(--veloura-line)]">
+                  <Image src={selectedStylist.image} alt={selectedStylist.name} fill className="object-cover" sizes="80px" />
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="text-lg text-[var(--veloura-text)]">{selectedStylist.name}</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">{selectedStylist.title}</p>
+                  <div className="mt-3 flex items-center gap-3">
+                    <RatingStars rating={selectedStylist.rating} />
+                    <p className="text-sm text-[var(--veloura-text)]">{selectedStylist.rating.toFixed(1)} / 5</p>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-[var(--veloura-muted)]">{selectedStylist.bio}</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-6 grid gap-4 lg:grid-cols-3">
+              {service.stylists.map((stylist) => {
+                const isActive = stylist.id === selectedStylistId;
+                return (
+                  <div
+                    key={stylist.id}
+                    className={`rounded-[24px] border p-4 transition ${
+                      isActive ? "border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)]"
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <div className="relative h-16 w-16 overflow-hidden rounded-[18px] border border-[var(--veloura-line)]">
+                        <Image src={stylist.image} alt={stylist.name} fill className="object-cover" sizes="64px" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-base text-[var(--veloura-text)]">{stylist.name}</p>
+                        <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">{stylist.title}</p>
+                        <div className="mt-3 flex items-center gap-3">
+                          <RatingStars rating={stylist.rating} />
+                          <p className="text-sm text-[var(--veloura-text)]">{stylist.rating.toFixed(1)}</p>
+                        </div>
                       </div>
                     </div>
+                    <p className="mt-4 text-sm leading-6 text-[var(--veloura-muted)]">{stylist.bio}</p>
+                    <div className="mt-4 flex flex-wrap gap-3">
+                      <Button
+                        type="button"
+                        size="sm"
+                        onClick={() => {
+                          setSelectedStylistId(stylist.id);
+                          setSelectedDate("");
+                          setSelectedSlotId("");
+                        }}
+                      >
+                        Choose {stylist.name}
+                      </Button>
+                    </div>
                   </div>
-                  <p className="mt-4 text-sm leading-6 text-[var(--veloura-muted)]">{stylist.bio}</p>
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    <Button
-                      type="button"
-                      size="sm"
-                      onClick={() => {
-                        setSelectedStylistId(stylist.id);
-                        setSelectedDate("");
-                        setSelectedSlotId("");
-                      }}
-                    >
-                      Choose {stylist.name}
-                    </Button>
-                    <Button asChild variant="outline" size="sm">
-                      <Link href={hairHref(`/hairdressers/${stylist.id}`)}>View profile</Link>
-                    </Button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
 
           {selectedStylist ? (
             <div className="mt-6 rounded-[24px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-5">

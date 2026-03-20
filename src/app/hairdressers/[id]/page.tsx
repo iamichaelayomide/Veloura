@@ -24,7 +24,7 @@ export default async function HairdresserProfilePage({ params }: { params: Promi
         description={`${stylist.title}. Read through the profile, scan the reviews, then book the appointment that fits the look you want.`}
         actions={
           <Button asChild>
-            <Link href={hairHref(`/services/${stylist.services[0]?.slug ?? "services"}`)}>Book appointment</Link>
+            <Link href={hairHref(`/services/${stylist.services[0]?.slug ?? "services"}?stylist=${stylist.id}#booking-flow`)}>Book appointment</Link>
           </Button>
         }
       />
@@ -43,7 +43,7 @@ export default async function HairdresserProfilePage({ params }: { params: Promi
               {stylist.services.map((service) => (
                 <Link
                   key={service.id}
-                  href={hairHref(`/services/${service.slug}`)}
+                  href={hairHref(`/services/${service.slug}?stylist=${stylist.id}#booking-flow`)}
                   className="rounded-[20px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-4 transition hover:border-[rgba(214,195,162,0.36)] hover:bg-[rgba(214,195,162,0.06)]"
                 >
                   <p className="text-base text-[var(--veloura-text)]">{service.name}</p>
@@ -99,7 +99,7 @@ export default async function HairdresserProfilePage({ params }: { params: Promi
 
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild>
-                <Link href={hairHref(`/services/${stylist.services[0]?.slug ?? "services"}`)}>Book appointment</Link>
+                <Link href={hairHref(`/services/${stylist.services[0]?.slug ?? "services"}?stylist=${stylist.id}#booking-flow`)}>Book appointment</Link>
               </Button>
               <Button asChild variant="outline">
                 <Link href={hairHref("/services")}>All services</Link>

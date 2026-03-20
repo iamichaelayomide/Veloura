@@ -10,9 +10,17 @@ import { hairHref } from "@/lib/routes";
 import { getServiceBySlug } from "@/lib/services";
 import { formatDurationHours, formatPrice } from "@/lib/utils";
 
-export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ServiceDetailPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ stylist?: string }>;
+}) {
   const { slug } = await params;
+  const query = await searchParams;
   const service = getServiceBySlug(slug);
+  const preselectedStylist = query.stylist && service ? service.stylists.find((stylist) => stylist.id === query.stylist) : null;
 
   if (!service) {
     notFound();
@@ -23,7 +31,11 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       <PageHero
         eyebrow="Appointment"
         title={service.name}
-        description={`${service.shortDescription} Choose from available hairdressers, read reviews, and book your preferred day and time in one flow.`}
+        description={
+          preselectedStylist
+            ? `${service.shortDescription} ${preselectedStylist.name} is already selected, so you can continue straight into booking.`
+            : `${service.shortDescription} Choose from available hairdressers, read reviews, and book your preferred day and time in one flow.`
+        }
       />
 
       <section className="site-shell mt-10 grid gap-8 lg:grid-cols-[1fr_.9fr]">
@@ -61,29 +73,31 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             ))}
           </div>
 
-          <div className="panel rounded-[30px] p-6">
-            <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Hairdressers</p>
-            <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {service.stylists.map((stylist) => (
-                <Link
-                  key={stylist.id}
-                  href={hairHref(`/hairdressers/${stylist.id}`)}
-                  className="rounded-[24px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-4 transition hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.06)]"
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-[18px]">
-                    <Image src={stylist.image} alt={stylist.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 22vw" />
-                  </div>
-                  <p className="mt-4 text-base text-[var(--veloura-text)]">{stylist.name}</p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-[var(--veloura-accent)]">{stylist.title}</p>
-                  <div className="mt-3 flex items-center gap-3">
-                    <RatingStars rating={stylist.rating} />
-                    <p className="text-sm text-[var(--veloura-text)]">{stylist.rating.toFixed(1)}</p>
-                  </div>
-                  <p className="mt-3 text-sm leading-6 text-[var(--veloura-muted)]">{stylist.bio}</p>
-                </Link>
-              ))}
+          {!preselectedStylist ? (
+            <div className="panel rounded-[30px] p-6">
+              <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Hairdressers</p>
+              <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {service.stylists.map((stylist) => (
+                  <Link
+                    key={stylist.id}
+                    href={hairHref(`/hairdressers/${stylist.id}`)}
+                    className="rounded-[24px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-4 transition hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.06)]"
+                  >
+                    <div className="relative aspect-[4/5] overflow-hidden rounded-[18px]">
+                      <Image src={stylist.image} alt={stylist.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 22vw" />
+                    </div>
+                    <p className="mt-4 text-base text-[var(--veloura-text)]">{stylist.name}</p>
+                    <p className="mt-1 text-xs uppercase tracking-[0.18em] text-[var(--veloura-accent)]">{stylist.title}</p>
+                    <div className="mt-3 flex items-center gap-3">
+                      <RatingStars rating={stylist.rating} />
+                      <p className="text-sm text-[var(--veloura-text)]">{stylist.rating.toFixed(1)}</p>
+                    </div>
+                    <p className="mt-3 text-sm leading-6 text-[var(--veloura-muted)]">{stylist.bio}</p>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
 
         <div className="panel h-fit rounded-[30px] p-6 lg:sticky lg:top-28">
@@ -118,7 +132,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
       </section>
 
       <div id="booking-flow">
-        <ServiceBookingExperience service={service} />
+        <ServiceBookingExperience service={service} initialStylistId={preselectedStylist?.id} />
       </div>
     </div>
   );
