@@ -148,10 +148,12 @@ export function ServiceBookingExperience({
 
     setProcessing(true);
     window.setTimeout(() => {
-      const summary = new URLSearchParams({
-        method: paymentMethod,
-      });
+      if (paymentMethod === "paystack") {
+        window.location.href = hairHref("/services/checkout/paystack");
+        return;
+      }
 
+      const summary = new URLSearchParams({ method: paymentMethod });
       window.location.href = hairHref(`/services/booking/success?${summary.toString()}`);
     }, 700);
   }

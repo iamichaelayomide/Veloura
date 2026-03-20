@@ -47,6 +47,14 @@ export default async function ServiceBookingSuccessPage({
               <p className="text-xs uppercase tracking-[0.22em] text-[var(--veloura-accent)]">Next step</p>
               <p className="mt-3 text-base text-[var(--veloura-text)]">{details.nextStep}</p>
             </div>
+            <div className="rounded-[24px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-5">
+              <p className="text-xs uppercase tracking-[0.22em] text-[var(--veloura-accent)]">Reminder</p>
+              <p className="mt-3 text-base text-[var(--veloura-text)]">Check your SMS and email for the appointment date, time, and follow-up reminder details.</p>
+            </div>
+          </div>
+
+          <div className="mt-6 rounded-[24px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-5">
+            <p className="text-sm leading-7 text-[var(--veloura-text)]">A confirmation email will be sent with your appointment details, and a reminder will be sent again before your booking date.</p>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
