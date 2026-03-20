@@ -101,9 +101,6 @@ export default async function HairdresserProfilePage({ params }: { params: Promi
               <Button asChild>
                 <Link href={hairHref(`/services/${stylist.services[0]?.slug ?? "services"}?stylist=${stylist.id}#booking-flow`)}>Book appointment</Link>
               </Button>
-              <Button asChild variant="outline">
-                <Link href={hairHref("/services")}>All services</Link>
-              </Button>
             </div>
           </div>
         </div>

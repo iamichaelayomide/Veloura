@@ -432,9 +432,6 @@ export function ServiceBookingExperience({
           <Button asChild variant="outline" className="w-full">
             <Link href={hairHref("/account")}>View saved appointment</Link>
           </Button>
-          <Button asChild variant="outline" className="w-full">
-            <Link href={hairHref("/services")}>All services</Link>
-          </Button>
         </div>
       </div>
     </section>
