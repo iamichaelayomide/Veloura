@@ -67,12 +67,17 @@ export function ProductCard({ product }: ProductCardProps) {
           <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-[var(--veloura-accent)]">Best for {product.variants[0]?.label.toLowerCase() ?? "a polished everyday finish"}</p>
         </div>
 
-        <div className="flex items-end justify-between gap-4">
+        <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-sm font-medium text-[var(--veloura-text)] md:text-base">{formatPrice(product.basePrice)}</p>
             {product.compareAtPrice ? <p className="text-xs text-[var(--veloura-muted)] line-through md:text-sm">{formatPrice(product.compareAtPrice)}</p> : null}
           </div>
-          <Button asChild size="sm" variant="ghost" className="border border-white/10 px-3">
+          <Button
+            asChild
+            size="sm"
+            variant="ghost"
+            className="h-8 rounded-full border border-[rgba(214,195,162,0.18)] px-2.5 text-[10px] uppercase tracking-[0.18em] text-[var(--veloura-accent)] hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.08)]"
+          >
             <Link href={hairHref(`/product/${product.slug}`)}>See details</Link>
           </Button>
         </div>
