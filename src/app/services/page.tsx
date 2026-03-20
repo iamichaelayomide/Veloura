@@ -83,7 +83,7 @@ export default function ServicesPage() {
 
       <section id="service-list" className="site-shell mt-10">
         <div className="panel rounded-[30px] p-6">
-          <p className="text-xs uppercase tracking-[0.28em] text-[var(--veloura-accent)]">All appointments</p>
+          <p className="text-xs uppercase tracking-[0.28em] text-[var(--veloura-accent)]">All services</p>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--veloura-muted)]">Open any appointment to choose from the available hairdressers, see reviews, and lock your preferred date and time.</p>
         </div>
         <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">

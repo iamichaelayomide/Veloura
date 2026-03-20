@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { RatingStars } from "@/components/shared/rating-stars";
 import { Input } from "@/components/ui/input";
 import { hairHref } from "@/lib/routes";
-import { formatPrice } from "@/lib/utils";
+import { formatDurationHours, formatPrice } from "@/lib/utils";
 import { useServiceBookingStore } from "@/store/useServiceBookingStore";
 import { useToastStore } from "@/store/useToastStore";
 import type { Service } from "@/types";
@@ -367,7 +367,7 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
           </div>
           <div className="flex justify-between gap-4">
             <span>Duration</span>
-            <span>{service.durationMinutes} mins</span>
+            <span>{formatDurationHours(service.durationMinutes)}</span>
           </div>
           <div className="flex justify-between gap-4">
             <span>Hairdresser</span>
@@ -408,7 +408,7 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
             <Link href={hairHref("/account")}>View saved appointment</Link>
           </Button>
           <Button asChild variant="outline" className="w-full">
-            <Link href={hairHref("/services")}>View all appointments</Link>
+            <Link href={hairHref("/services")}>All services</Link>
           </Button>
         </div>
       </div>

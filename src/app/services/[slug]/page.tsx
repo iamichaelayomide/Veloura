@@ -8,7 +8,7 @@ import { ServiceBookingExperience } from "@/components/storefront/service-bookin
 import { Button } from "@/components/ui/button";
 import { hairHref } from "@/lib/routes";
 import { getServiceBySlug } from "@/lib/services";
-import { formatPrice } from "@/lib/utils";
+import { formatDurationHours, formatPrice } from "@/lib/utils";
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -95,7 +95,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
             </div>
             <div className="flex justify-between">
               <span>Duration</span>
-              <span>{service.durationMinutes} mins</span>
+              <span>{formatDurationHours(service.durationMinutes)}</span>
             </div>
             <div className="flex justify-between">
               <span>Hairdressers</span>

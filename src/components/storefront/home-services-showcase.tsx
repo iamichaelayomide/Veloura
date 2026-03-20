@@ -7,7 +7,7 @@ import Link from "next/link";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Button } from "@/components/ui/button";
 import { hairHref } from "@/lib/routes";
-import { formatPrice } from "@/lib/utils";
+import { formatDurationHours, formatPrice } from "@/lib/utils";
 import type { Service } from "@/types";
 
 export function HomeServicesShowcase({ services }: { services: Service[] }) {
@@ -43,7 +43,9 @@ export function HomeServicesShowcase({ services }: { services: Service[] }) {
                   type="button"
                   onClick={() => setActiveServiceId(service.id)}
                   className={`rounded-[22px] border p-4 text-left transition ${
-                    isActive ? "border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)]"
+                    isActive
+                      ? "border-[rgba(214,195,162,0.55)] bg-[rgba(214,195,162,0.14)] shadow-[0_0_0_1px_rgba(214,195,162,0.12)]"
+                      : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.08)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.16)]"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -73,17 +75,17 @@ export function HomeServicesShowcase({ services }: { services: Service[] }) {
 
             <div className="space-y-5 p-5 md:p-6">
               <div className="grid gap-3 sm:grid-cols-3">
-                <div className="rounded-[20px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-4">
+                <div className="rounded-[20px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-3">
                   <p className="text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">From</p>
-                  <p className="mt-3 text-lg text-[var(--veloura-text)]">{formatPrice(activeService.price)}</p>
+                  <p className="mt-2 text-sm text-[var(--veloura-text)]">{formatPrice(activeService.price)}</p>
                 </div>
-                <div className="rounded-[20px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-4">
+                <div className="rounded-[20px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-3">
                   <p className="text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">Duration</p>
-                  <p className="mt-3 text-lg text-[var(--veloura-text)]">{activeService.durationMinutes} mins</p>
+                  <p className="mt-2 text-sm text-[var(--veloura-text)]">{formatDurationHours(activeService.durationMinutes)}</p>
                 </div>
-                <div className="rounded-[20px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-4">
+                <div className="rounded-[20px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-3">
                   <p className="text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">Next slot</p>
-                  <p className="mt-3 text-lg text-[var(--veloura-text)]">{firstOpenSlot?.dayLabel ?? "Open soon"}</p>
+                  <p className="mt-2 text-sm text-[var(--veloura-text)]">{firstOpenSlot?.dayLabel ?? "Open soon"}</p>
                 </div>
               </div>
 
@@ -111,7 +113,7 @@ export function HomeServicesShowcase({ services }: { services: Service[] }) {
                   <Link href={hairHref(`/services/${activeService.slug}`)}>Book appointment</Link>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link href={hairHref("/services")}>All appointments</Link>
+                  <Link href={hairHref("/services")}>All services</Link>
                 </Button>
               </div>
             </div>

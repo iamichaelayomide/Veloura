@@ -6,7 +6,7 @@ import { Clock3 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { hairHref } from "@/lib/routes";
-import { formatPrice } from "@/lib/utils";
+import { formatDurationHours, formatPrice } from "@/lib/utils";
 import { getServiceCategoryName } from "@/lib/services";
 import type { Service } from "@/types";
 
@@ -29,7 +29,7 @@ export function ServiceCard({ service }: { service: Service }) {
         <div className="flex items-center justify-between gap-4 text-sm text-[var(--veloura-muted)]">
           <div className="flex items-center gap-2">
             <Clock3 className="h-4 w-4 text-[var(--veloura-accent)]" />
-            <span>{service.durationMinutes} mins</span>
+            <span>{formatDurationHours(service.durationMinutes)}</span>
           </div>
           <span className="text-[var(--veloura-text)]">{formatPrice(service.price)}</span>
         </div>

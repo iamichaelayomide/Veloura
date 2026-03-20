@@ -77,7 +77,11 @@ function MobileMenu({
               <button
                 type="button"
                 onClick={() => setProductsOpen((value) => !value)}
-                className="flex w-full items-center justify-between rounded-[16px] px-2 py-1 text-left transition hover:bg-[rgba(214,195,162,0.06)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.12)]"
+                className={`flex w-full items-center justify-between rounded-[16px] px-2 py-2 text-left transition ${
+                  productsOpen
+                    ? "bg-[rgba(214,195,162,0.14)] text-[var(--veloura-accent)]"
+                    : "hover:bg-[rgba(214,195,162,0.08)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.16)]"
+                }`}
               >
                 <span className="text-sm uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Products</span>
                 <ChevronDown className={`h-4 w-4 text-[var(--veloura-text)] transition ${productsOpen ? "rotate-180" : ""}`} />
@@ -102,7 +106,11 @@ function MobileMenu({
               <button
                 type="button"
                 onClick={() => setServicesOpen((value) => !value)}
-                className="flex w-full items-center justify-between rounded-[16px] px-2 py-1 text-left transition hover:bg-[rgba(214,195,162,0.06)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.12)]"
+                className={`flex w-full items-center justify-between rounded-[16px] px-2 py-2 text-left transition ${
+                  servicesOpen
+                    ? "bg-[rgba(214,195,162,0.14)] text-[var(--veloura-accent)]"
+                    : "hover:bg-[rgba(214,195,162,0.08)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.16)]"
+                }`}
               >
                 <span className="text-sm uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Services</span>
                 <ChevronDown className={`h-4 w-4 text-[var(--veloura-text)] transition ${servicesOpen ? "rotate-180" : ""}`} />
@@ -256,7 +264,11 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setDesktopProductsOpen((value) => !value)}
-                className="flex items-center gap-2 rounded-full px-3 py-2 text-sm text-[var(--veloura-text)] transition hover:bg-[rgba(214,195,162,0.06)] hover:text-[var(--veloura-accent)] active:scale-[0.98] active:bg-[rgba(214,195,162,0.12)]"
+                className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm transition ${
+                  desktopProductsOpen
+                    ? "bg-[rgba(214,195,162,0.14)] text-[var(--veloura-accent)]"
+                    : "text-[var(--veloura-text)] hover:bg-[rgba(214,195,162,0.08)] hover:text-[var(--veloura-accent)] active:scale-[0.98] active:bg-[rgba(214,195,162,0.16)]"
+                }`}
               >
                 <span>Products</span>
                 <ChevronDown className={`h-4 w-4 transition ${desktopProductsOpen ? "rotate-180" : ""}`} />
@@ -287,7 +299,11 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setDesktopServicesOpen((value) => !value)}
-                className="flex items-center gap-2 rounded-full px-3 py-2 text-sm text-[var(--veloura-text)] transition hover:bg-[rgba(214,195,162,0.06)] hover:text-[var(--veloura-accent)] active:scale-[0.98] active:bg-[rgba(214,195,162,0.12)]"
+                className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm transition ${
+                  desktopServicesOpen
+                    ? "bg-[rgba(214,195,162,0.14)] text-[var(--veloura-accent)]"
+                    : "text-[var(--veloura-text)] hover:bg-[rgba(214,195,162,0.08)] hover:text-[var(--veloura-accent)] active:scale-[0.98] active:bg-[rgba(214,195,162,0.16)]"
+                }`}
               >
                 <span>Services</span>
                 <ChevronDown className={`h-4 w-4 transition ${desktopServicesOpen ? "rotate-180" : ""}`} />

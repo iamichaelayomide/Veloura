@@ -218,7 +218,12 @@ export default function HomePage() {
       <section id="faq" className="site-shell pt-14">
         <SectionHeading eyebrow="FAQ" title="Get the answers you need before you spend." description="Read through delivery, pickup, payment, customisation, and aftercare details if you want fewer surprises after checkout." />
         <div className="mt-8">
-          <FaqList items={storefrontFaqs} />
+          <FaqList items={storefrontFaqs.slice(0, 3)} />
+        </div>
+        <div className="mt-6">
+          <Button asChild variant="outline">
+            <Link href={hairHref("/faq")}>See all FAQs</Link>
+          </Button>
         </div>
       </section>
 

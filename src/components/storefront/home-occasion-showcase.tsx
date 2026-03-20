@@ -43,7 +43,9 @@ export function HomeOccasionShowcase({ occasions }: { occasions: OccasionWithPro
                   type="button"
                   onClick={() => setActiveOccasionId(occasion.id)}
                   className={`rounded-[22px] border p-4 text-left transition ${
-                    isActive ? "border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)]"
+                    isActive
+                      ? "border-[rgba(214,195,162,0.55)] bg-[rgba(214,195,162,0.14)] shadow-[0_0_0_1px_rgba(214,195,162,0.12)]"
+                      : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.08)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.16)]"
                   }`}
                 >
                   <p className="text-base text-[var(--veloura-text)]">{occasion.name}</p>

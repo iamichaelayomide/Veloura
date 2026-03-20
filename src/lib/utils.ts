@@ -25,6 +25,12 @@ export function formatDate(value: string) {
   }).format(new Date(value));
 }
 
+export function formatDurationHours(minutes: number) {
+  const hours = minutes / 60;
+  const formatted = Number.isInteger(hours) ? String(hours) : hours.toFixed(2).replace(/\.?0+$/, "");
+  return `${formatted} hours`;
+}
+
 export function generateSlug(title: string) {
   return title
     .toLowerCase()
