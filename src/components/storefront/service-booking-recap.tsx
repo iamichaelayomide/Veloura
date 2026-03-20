@@ -27,6 +27,10 @@ function formatBookedAt(dateTime: string) {
   }).format(new Date(dateTime));
 }
 
+function formatPaymentLabel(method: "paystack" | "transfer") {
+  return method === "paystack" ? "Paid online" : "Paid by transfer";
+}
+
 export function ServiceBookingRecap() {
   const booking = useServiceBookingStore((state) => state.booking);
 
@@ -74,7 +78,7 @@ export function ServiceBookingRecap() {
         </div>
         <div>
           <p className="text-xs uppercase tracking-[0.22em] text-[var(--veloura-muted)]">Payment</p>
-          <p className="mt-2 text-sm capitalize text-[var(--veloura-text)]">{booking.paymentMethod}</p>
+          <p className="mt-2 text-sm text-[var(--veloura-text)]">{formatPaymentLabel(booking.paymentMethod)}</p>
         </div>
       </div>
 

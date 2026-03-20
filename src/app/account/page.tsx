@@ -6,6 +6,7 @@ import { ServiceBookingRecap } from "@/components/storefront/service-booking-rec
 import { hairHref } from "@/lib/routes";
 
 const accountLinks = [
+  { href: hairHref("/account/appointments"), title: "Appointments", description: "Check booked appointments, dates, payment status, and contact details." },
   { href: hairHref("/account/profile"), title: "Profile", description: "Update customer identity, contact details, and preferences." },
   { href: hairHref("/account/orders"), title: "Orders", description: "Track current orders and revisit previous purchases." },
   { href: hairHref("/account/addresses"), title: "Addresses", description: "Manage saved delivery destinations and defaults." },

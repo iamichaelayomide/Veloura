@@ -130,6 +130,7 @@ export function ServiceBookingExperience({
     }
 
     setBooking({
+      id: selectedSlot.id,
       serviceSlug: service.slug,
       serviceName: service.name,
       servicePrice: service.price,
@@ -137,6 +138,7 @@ export function ServiceBookingExperience({
       date: selectedSlot.date,
       dayLabel: selectedSlot.dayLabel,
       time: selectedSlot.time,
+      stylistId: selectedSlot.stylistId,
       stylist: selectedSlot.stylist,
       customerName,
       email,
@@ -144,6 +146,7 @@ export function ServiceBookingExperience({
       note,
       paymentMethod,
       bookedAt: new Date().toISOString(),
+      status: "pending_payment",
     });
 
     setProcessing(true);

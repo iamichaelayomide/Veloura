@@ -32,6 +32,7 @@ export const storefrontRoutes = [
   "/forgot-password",
   "/reset-password",
   "/account",
+  "/account/appointments",
   "/account/orders",
   "/account/orders/[orderNumber]",
   "/account/addresses",
