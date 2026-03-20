@@ -77,7 +77,7 @@ function MobileMenu({
               <button
                 type="button"
                 onClick={() => setProductsOpen((value) => !value)}
-                className="flex w-full items-center justify-between text-left"
+                className="flex w-full items-center justify-between rounded-[16px] px-2 py-1 text-left transition hover:bg-[rgba(214,195,162,0.06)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.12)]"
               >
                 <span className="text-sm uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Products</span>
                 <ChevronDown className={`h-4 w-4 text-[var(--veloura-text)] transition ${productsOpen ? "rotate-180" : ""}`} />
@@ -88,7 +88,7 @@ function MobileMenu({
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="rounded-[16px] border border-[rgba(255,255,255,0.08)] bg-[#161c2a] px-4 py-3 text-sm text-[var(--veloura-text)]"
+                      className="rounded-[16px] border border-[rgba(255,255,255,0.08)] bg-[#161c2a] px-4 py-3 text-sm text-[var(--veloura-text)] transition hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.08)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.16)]"
                       onClick={onClose}
                     >
                       {link.label}
@@ -102,7 +102,7 @@ function MobileMenu({
               <button
                 type="button"
                 onClick={() => setServicesOpen((value) => !value)}
-                className="flex w-full items-center justify-between text-left"
+                className="flex w-full items-center justify-between rounded-[16px] px-2 py-1 text-left transition hover:bg-[rgba(214,195,162,0.06)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.12)]"
               >
                 <span className="text-sm uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Services</span>
                 <ChevronDown className={`h-4 w-4 text-[var(--veloura-text)] transition ${servicesOpen ? "rotate-180" : ""}`} />
@@ -113,7 +113,7 @@ function MobileMenu({
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="rounded-[16px] border border-[rgba(255,255,255,0.08)] bg-[#161c2a] px-4 py-3 text-sm text-[var(--veloura-text)]"
+                      className="rounded-[16px] border border-[rgba(255,255,255,0.08)] bg-[#161c2a] px-4 py-3 text-sm text-[var(--veloura-text)] transition hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.08)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.16)]"
                       onClick={onClose}
                     >
                       {link.label}
@@ -127,7 +127,7 @@ function MobileMenu({
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-[20px] border border-[rgba(255,255,255,0.08)] bg-[#111521] px-4 py-4 text-base text-[var(--veloura-text)]"
+                className="rounded-[20px] border border-[rgba(255,255,255,0.08)] bg-[#111521] px-4 py-4 text-base text-[var(--veloura-text)] transition hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.08)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.16)]"
                 onClick={onClose}
               >
                 {link.label}
@@ -256,7 +256,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setDesktopProductsOpen((value) => !value)}
-                className="flex items-center gap-2 text-sm text-[var(--veloura-text)] transition hover:text-[var(--veloura-accent)]"
+                className="flex items-center gap-2 rounded-full px-3 py-2 text-sm text-[var(--veloura-text)] transition hover:bg-[rgba(214,195,162,0.06)] hover:text-[var(--veloura-accent)] active:scale-[0.98] active:bg-[rgba(214,195,162,0.12)]"
               >
                 <span>Products</span>
                 <ChevronDown className={`h-4 w-4 transition ${desktopProductsOpen ? "rotate-180" : ""}`} />
@@ -266,7 +266,7 @@ export function SiteHeader() {
                 <div className="absolute left-0 top-full z-30 mt-3 w-64 rounded-[24px] border border-[var(--veloura-line)] bg-[#0c1019] p-4 shadow-[0_20px_70px_rgba(0,0,0,0.45)]">
                   <div className="grid gap-2">
                     {productLinks.map((link) => (
-                      <Link key={link.href} href={link.href} className="rounded-[16px] border border-[rgba(255,255,255,0.08)] bg-[#111521] px-4 py-3 text-sm text-[var(--veloura-text)]">
+                      <Link key={link.href} href={link.href} className="rounded-[16px] border border-[rgba(255,255,255,0.08)] bg-[#111521] px-4 py-3 text-sm text-[var(--veloura-text)] transition hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.08)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.16)]">
                         {link.label}
                       </Link>
                     ))}
@@ -287,7 +287,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setDesktopServicesOpen((value) => !value)}
-                className="flex items-center gap-2 text-sm text-[var(--veloura-text)] transition hover:text-[var(--veloura-accent)]"
+                className="flex items-center gap-2 rounded-full px-3 py-2 text-sm text-[var(--veloura-text)] transition hover:bg-[rgba(214,195,162,0.06)] hover:text-[var(--veloura-accent)] active:scale-[0.98] active:bg-[rgba(214,195,162,0.12)]"
               >
                 <span>Services</span>
                 <ChevronDown className={`h-4 w-4 transition ${desktopServicesOpen ? "rotate-180" : ""}`} />
@@ -297,7 +297,7 @@ export function SiteHeader() {
                 <div className="absolute left-0 top-full z-30 mt-3 w-64 rounded-[24px] border border-[var(--veloura-line)] bg-[#0c1019] p-4 shadow-[0_20px_70px_rgba(0,0,0,0.45)]">
                   <div className="grid gap-2">
                     {serviceLinks.map((link) => (
-                      <Link key={link.href} href={link.href} className="rounded-[16px] border border-[rgba(255,255,255,0.08)] bg-[#111521] px-4 py-3 text-sm text-[var(--veloura-text)]">
+                      <Link key={link.href} href={link.href} className="rounded-[16px] border border-[rgba(255,255,255,0.08)] bg-[#111521] px-4 py-3 text-sm text-[var(--veloura-text)] transition hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.08)] active:scale-[0.99] active:bg-[rgba(214,195,162,0.16)]">
                         {link.label}
                       </Link>
                     ))}

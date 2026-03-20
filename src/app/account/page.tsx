@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { PageHero } from "@/components/shared/page-hero";
 import { SurfaceCard } from "@/components/shared/surface-card";
+import { ServiceBookingRecap } from "@/components/storefront/service-booking-recap";
 import { hairHref } from "@/lib/routes";
 
 const accountLinks = [
@@ -16,6 +17,9 @@ export default function AccountPage() {
   return (
     <div className="pb-16">
       <PageHero eyebrow="Account" title="Everything after the first purchase." description="Profile management, order history, addresses, security, and wishlist access." />
+      <section className="site-shell mt-10">
+        <ServiceBookingRecap />
+      </section>
       <section className="site-shell mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {accountLinks.map((item) => (
           <Link key={item.href} href={item.href}>

@@ -11,12 +11,60 @@ import { useServiceBookingStore } from "@/store/useServiceBookingStore";
 import { useToastStore } from "@/store/useToastStore";
 import type { Service } from "@/types";
 
+const WEEKDAY_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+type CalendarDay = {
+  key: string;
+  label: string;
+  date: string;
+  available: boolean;
+  outsideMonth: boolean;
+};
+
+function toSafeDate(date: string) {
+  return new Date(`${date}T12:00:00`);
+}
+
 function formatCalendarDate(date: string) {
   return new Intl.DateTimeFormat("en-GB", {
     month: "short",
     day: "numeric",
     weekday: "short",
-  }).format(new Date(date));
+  }).format(toSafeDate(date));
+}
+
+function buildCalendarDays(dates: string[]) {
+  if (!dates.length) return [];
+
+  const safeDates = dates.map(toSafeDate).sort((left, right) => left.getTime() - right.getTime());
+  const monthDate = safeDates[0];
+  const firstDay = new Date(monthDate.getFullYear(), monthDate.getMonth(), 1);
+  const lastDay = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0);
+  const jsWeekday = firstDay.getDay();
+  const mondayOffset = (jsWeekday + 6) % 7;
+  const days: CalendarDay[] = [];
+
+  for (let index = 0; index < mondayOffset; index += 1) {
+    days.push({ key: `empty-start-${index}`, label: "", date: "", available: false, outsideMonth: true });
+  }
+
+  for (let day = 1; day <= lastDay.getDate(); day += 1) {
+    const current = new Date(monthDate.getFullYear(), monthDate.getMonth(), day);
+    const isoDate = `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    days.push({
+      key: isoDate,
+      label: String(day),
+      date: isoDate,
+      available: dates.includes(isoDate),
+      outsideMonth: false,
+    });
+  }
+
+  while (days.length % 7 !== 0) {
+    const index = days.length;
+    days.push({ key: `empty-end-${index}`, label: "", date: "", available: false, outsideMonth: true });
+  }
+
+  return days;
 }
 
 export function ServiceBookingExperience({ service }: { service: Service }) {
@@ -58,6 +106,10 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
     () => effectiveDateSlots.find((slot) => slot.id === effectiveSelectedSlotId) ?? null,
     [effectiveDateSlots, effectiveSelectedSlotId],
   );
+  const calendarDays = useMemo(() => buildCalendarDays(availableDates.map((item) => item.date)), [availableDates]);
+  const calendarMonthLabel = availableDates[0]?.date
+    ? new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric" }).format(toSafeDate(availableDates[0].date))
+    : "No dates yet";
 
   function handleContinue() {
     if (!selectedStylist || !selectedSlot || !customerName.trim() || !email.trim() || !phone.trim()) {
@@ -82,16 +134,13 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
       phone,
       note,
       paymentMethod,
+      bookedAt: new Date().toISOString(),
     });
 
     setProcessing(true);
     window.setTimeout(() => {
       const summary = new URLSearchParams({
         method: paymentMethod,
-        service: service.name,
-        day: selectedSlot.dayLabel,
-        time: selectedSlot.time,
-        stylist: selectedSlot.stylist,
       });
 
       window.location.href = hairHref(`/services/booking/success?${summary.toString()}`);
@@ -157,33 +206,57 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
 
         <div className="panel rounded-[30px] p-6">
           <p className="text-xs uppercase tracking-[0.3em] text-[var(--veloura-accent)]">Step 2</p>
-          <h2 className="mt-3 font-display text-3xl text-[var(--veloura-text)] md:text-4xl">Pick a day from the calendar.</h2>
-          <p className="mt-3 text-sm leading-7 text-[var(--veloura-muted)]">Choose the month and day that works for you first, then select the exact time.</p>
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {availableDates.map((item) => {
-              const isActive = item.date === effectiveSelectedDate;
-              return (
-                <button
-                  key={item.date}
-                  type="button"
-                  onClick={() => {
-                    setSelectedDate(item.date);
-                    setSelectedSlotId("");
-                  }}
-                  className={`rounded-[22px] border p-4 text-left transition ${
-                    isActive ? "border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)]"
-                  }`}
-                >
-                  <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">{new Date(item.date).toLocaleString("en-GB", { month: "short" })}</p>
-                  <p className="mt-2 text-lg text-[var(--veloura-text)]">{new Date(item.date).toLocaleString("en-GB", { day: "2-digit" })}</p>
-                  <p className="mt-1 text-sm text-[var(--veloura-muted)]">{formatCalendarDate(item.date)}</p>
-                </button>
-              );
-            })}
+          <h2 className="mt-3 font-display text-3xl text-[var(--veloura-text)] md:text-4xl">Choose from the full calendar.</h2>
+          <p className="mt-3 text-sm leading-7 text-[var(--veloura-muted)]">Tap any available day in the month view, then choose one of the open times below.</p>
+
+          <div className="mt-6 rounded-[24px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-4">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-base text-[var(--veloura-text)]">{calendarMonthLabel}</p>
+              <p className="text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">{selectedStylist?.name ?? "Choose a stylist"}</p>
+            </div>
+
+            <div className="mt-5 grid grid-cols-7 gap-2">
+              {WEEKDAY_LABELS.map((label) => (
+                <div key={label} className="text-center text-xs uppercase tracking-[0.18em] text-[var(--veloura-muted)]">
+                  {label}
+                </div>
+              ))}
+
+              {calendarDays.map((day) => {
+                if (day.outsideMonth) {
+                  return <div key={day.key} className="aspect-square rounded-[16px] border border-transparent" />;
+                }
+
+                const isActive = day.date === effectiveSelectedDate;
+                return (
+                  <button
+                    key={day.key}
+                    type="button"
+                    disabled={!day.available}
+                    onClick={() => {
+                      setSelectedDate(day.date);
+                      setSelectedSlotId("");
+                    }}
+                    className={`aspect-square rounded-[16px] border text-sm transition ${
+                      isActive
+                        ? "border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.12)] text-[var(--veloura-text)]"
+                        : day.available
+                          ? "border-[var(--veloura-line)] bg-[rgba(8,11,18,0.55)] text-[var(--veloura-text)] hover:border-[rgba(214,195,162,0.36)] hover:bg-[rgba(214,195,162,0.06)]"
+                          : "cursor-not-allowed border-[rgba(255,255,255,0.04)] bg-[rgba(255,255,255,0.02)] text-[rgba(171,180,199,0.28)]"
+                    }`}
+                  >
+                    {day.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <div className="mt-6">
-            <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Available times</p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Available times</p>
+              <p className="text-sm text-[var(--veloura-muted)]">{effectiveSelectedDate ? formatCalendarDate(effectiveSelectedDate) : "Choose a day first"}</p>
+            </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {effectiveDateSlots.map((slot) => {
                 const isActive = slot.id === effectiveSelectedSlotId;
@@ -193,7 +266,7 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
                     type="button"
                     onClick={() => setSelectedSlotId(slot.id)}
                     className={`rounded-[22px] border p-4 text-left transition ${
-                      isActive ? "border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)]"
+                      isActive ? "border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] hover:border-[rgba(214,195,162,0.32)] hover:bg-[rgba(214,195,162,0.04)]"
                     }`}
                   >
                     <p className="text-sm text-[var(--veloura-text)]">{slot.time}</p>
@@ -228,7 +301,7 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
             <button
               type="button"
               onClick={() => setPaymentMethod("paystack")}
-              className={`rounded-[22px] border p-4 text-left transition ${paymentMethod === "paystack" ? "border-[rgba(214,195,162,0.4)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)]"}`}
+              className={`rounded-[22px] border p-4 text-left transition ${paymentMethod === "paystack" ? "border-[rgba(214,195,162,0.4)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] hover:border-[rgba(214,195,162,0.32)] hover:bg-[rgba(214,195,162,0.04)]"}`}
             >
               <p className="text-sm text-[var(--veloura-text)]">Pay online</p>
               <p className="mt-2 text-sm text-[var(--veloura-muted)]">Secure your slot right away and move into confirmation instantly.</p>
@@ -236,7 +309,7 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
             <button
               type="button"
               onClick={() => setPaymentMethod("transfer")}
-              className={`rounded-[22px] border p-4 text-left transition ${paymentMethod === "transfer" ? "border-[rgba(214,195,162,0.4)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)]"}`}
+              className={`rounded-[22px] border p-4 text-left transition ${paymentMethod === "transfer" ? "border-[rgba(214,195,162,0.4)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] hover:border-[rgba(214,195,162,0.32)] hover:bg-[rgba(214,195,162,0.04)]"}`}
             >
               <p className="text-sm text-[var(--veloura-text)]">Pay by transfer</p>
               <p className="mt-2 text-sm text-[var(--veloura-muted)]">Send payment with your name so the team can match your booking faster.</p>
@@ -265,6 +338,10 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
         <h3 className="mt-3 font-display text-3xl text-[var(--veloura-text)]">{service.name}</h3>
         <div className="mt-5 space-y-3 text-sm text-[var(--veloura-muted)]">
           <div className="flex justify-between gap-4">
+            <span>Service</span>
+            <span>{service.name}</span>
+          </div>
+          <div className="flex justify-between gap-4">
             <span>Price</span>
             <span>{formatPrice(service.price)}</span>
           </div>
@@ -284,11 +361,31 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
             <span>Time</span>
             <span>{selectedSlot?.time ?? "Choose a time"}</span>
           </div>
+          <div className="flex justify-between gap-4">
+            <span>Client</span>
+            <span>{customerName || "Add your name"}</span>
+          </div>
+          <div className="flex justify-between gap-4">
+            <span>Phone</span>
+            <span>{phone || "Add phone"}</span>
+          </div>
+          <div className="flex justify-between gap-4">
+            <span>Payment</span>
+            <span>{paymentMethod === "paystack" ? "Pay online" : "Bank transfer"}</span>
+          </div>
+        </div>
+
+        <div className="mt-5 rounded-[22px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-4">
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--veloura-accent)]">Note for the team</p>
+          <p className="mt-3 text-sm leading-7 text-[var(--veloura-muted)]">{note || "No note added yet."}</p>
         </div>
 
         <div className="mt-6 space-y-3">
           <Button onClick={handleContinue} className="w-full" disabled={processing}>
             {processing ? "Confirming booking..." : `Book for ${formatPrice(service.price)}`}
+          </Button>
+          <Button asChild variant="outline" className="w-full">
+            <Link href={hairHref("/account")}>View saved appointment</Link>
           </Button>
           <Button asChild variant="outline" className="w-full">
             <Link href={hairHref("/services")}>View all appointments</Link>

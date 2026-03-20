@@ -17,6 +17,7 @@ type ServiceBookingState = {
   phone: string;
   note: string;
   paymentMethod: "paystack" | "transfer";
+  bookedAt: string;
 };
 
 type BookingStore = {
@@ -39,6 +40,7 @@ const initialBooking: ServiceBookingState = {
   phone: "",
   note: "",
   paymentMethod: "paystack",
+  bookedAt: "",
 };
 
 export const useServiceBookingStore = create<BookingStore>()(
