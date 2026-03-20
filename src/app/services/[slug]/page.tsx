@@ -1,8 +1,12 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 import { PageHero } from "@/components/shared/page-hero";
+import { RatingStars } from "@/components/shared/rating-stars";
 import { ServiceBookingExperience } from "@/components/storefront/service-booking-experience";
+import { Button } from "@/components/ui/button";
+import { hairHref } from "@/lib/routes";
 import { getServiceBySlug } from "@/lib/services";
 import { formatPrice } from "@/lib/utils";
 
@@ -56,6 +60,30 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               </div>
             ))}
           </div>
+
+          <div className="panel rounded-[30px] p-6">
+            <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Hairdressers</p>
+            <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {service.stylists.map((stylist) => (
+                <Link
+                  key={stylist.id}
+                  href={hairHref(`/hairdressers/${stylist.id}`)}
+                  className="rounded-[24px] border border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)] p-4 transition hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.06)]"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-[18px]">
+                    <Image src={stylist.image} alt={stylist.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 22vw" />
+                  </div>
+                  <p className="mt-4 text-base text-[var(--veloura-text)]">{stylist.name}</p>
+                  <p className="mt-1 text-xs uppercase tracking-[0.18em] text-[var(--veloura-accent)]">{stylist.title}</p>
+                  <div className="mt-3 flex items-center gap-3">
+                    <RatingStars rating={stylist.rating} />
+                    <p className="text-sm text-[var(--veloura-text)]">{stylist.rating.toFixed(1)}</p>
+                  </div>
+                  <p className="mt-3 text-sm leading-6 text-[var(--veloura-muted)]">{stylist.bio}</p>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="panel h-fit rounded-[30px] p-6 lg:sticky lg:top-28">
@@ -83,10 +111,15 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               <p key={note}>{note}</p>
             ))}
           </div>
+          <Button asChild className="mt-6 w-full">
+            <a href="#booking-flow">Book appointment</a>
+          </Button>
         </div>
       </section>
 
-      <ServiceBookingExperience service={service} />
+      <div id="booking-flow">
+        <ServiceBookingExperience service={service} />
+      </div>
     </div>
   );
 }

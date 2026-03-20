@@ -34,7 +34,7 @@ export function ServiceCard({ service }: { service: Service }) {
           <span className="text-[var(--veloura-text)]">{formatPrice(service.price)}</span>
         </div>
         <Button asChild className="w-full">
-          <Link href={hairHref(`/services/${service.slug}`)}>View hairdressers and book</Link>
+          <Link href={hairHref(`/services/${service.slug}`)}>Book appointment</Link>
         </Button>
       </div>
     </article>

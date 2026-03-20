@@ -1,9 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import { RatingStars } from "@/components/shared/rating-stars";
 import { Input } from "@/components/ui/input";
 import { hairHref } from "@/lib/routes";
 import { formatPrice } from "@/lib/utils";
@@ -158,25 +160,43 @@ export function ServiceBookingExperience({ service }: { service: Service }) {
             {service.stylists.map((stylist) => {
               const isActive = stylist.id === selectedStylistId;
               return (
-                <button
+                <div
                   key={stylist.id}
-                  type="button"
-                  onClick={() => {
-                    setSelectedStylistId(stylist.id);
-                    setSelectedDate("");
-                    setSelectedSlotId("");
-                  }}
-                  className={`rounded-[24px] border p-4 text-left transition ${
+                  className={`rounded-[24px] border p-4 transition ${
                     isActive ? "border-[rgba(214,195,162,0.44)] bg-[rgba(214,195,162,0.08)]" : "border-[var(--veloura-line)] bg-[rgba(255,255,255,0.03)]"
                   }`}
                 >
-                  <p className="text-base text-[var(--veloura-text)]">{stylist.name}</p>
-                  <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">{stylist.title}</p>
-                  <p className="mt-3 text-sm leading-6 text-[var(--veloura-muted)]">{stylist.bio}</p>
-                  <p className="mt-4 text-sm text-[var(--veloura-text)]">
-                    {stylist.rating.toFixed(1)} / 5 from {stylist.reviewCount} reviews
-                  </p>
-                </button>
+                  <div className="flex items-start gap-4">
+                    <div className="relative h-16 w-16 overflow-hidden rounded-[18px] border border-[var(--veloura-line)]">
+                      <Image src={stylist.image} alt={stylist.name} fill className="object-cover" sizes="64px" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-base text-[var(--veloura-text)]">{stylist.name}</p>
+                      <p className="mt-1 text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">{stylist.title}</p>
+                      <div className="mt-3 flex items-center gap-3">
+                        <RatingStars rating={stylist.rating} />
+                        <p className="text-sm text-[var(--veloura-text)]">{stylist.rating.toFixed(1)}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-[var(--veloura-muted)]">{stylist.bio}</p>
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <Button
+                      type="button"
+                      size="sm"
+                      onClick={() => {
+                        setSelectedStylistId(stylist.id);
+                        setSelectedDate("");
+                        setSelectedSlotId("");
+                      }}
+                    >
+                      Choose {stylist.name}
+                    </Button>
+                    <Button asChild variant="outline" size="sm">
+                      <Link href={hairHref(`/hairdressers/${stylist.id}`)}>View profile</Link>
+                    </Button>
+                  </div>
+                </div>
               );
             })}
           </div>

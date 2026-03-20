@@ -92,11 +92,15 @@ export function HomeServicesShowcase({ services }: { services: Service[] }) {
                   <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Available hairdressers</p>
                   <div className="mt-4 grid gap-3 sm:grid-cols-3">
                     {activeService.stylists.slice(0, 3).map((stylist) => (
-                      <div key={stylist.id} className="rounded-[18px] border border-[var(--veloura-line)] bg-[rgba(8,11,18,0.55)] p-4">
+                      <Link
+                        key={stylist.id}
+                        href={hairHref(`/hairdressers/${stylist.id}`)}
+                        className="rounded-[18px] border border-[var(--veloura-line)] bg-[rgba(8,11,18,0.55)] p-4 transition hover:border-[rgba(214,195,162,0.34)] hover:bg-[rgba(214,195,162,0.08)]"
+                      >
                         <p className="text-sm text-[var(--veloura-text)]">{stylist.name}</p>
                         <p className="mt-1 text-xs uppercase tracking-[0.16em] text-[var(--veloura-accent)]">{stylist.title}</p>
                         <p className="mt-3 text-sm leading-6 text-[var(--veloura-muted)]">{stylist.rating.toFixed(1)} / 5</p>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -104,7 +108,7 @@ export function HomeServicesShowcase({ services }: { services: Service[] }) {
 
               <div className="flex flex-wrap gap-3">
                 <Button asChild>
-                  <Link href={hairHref(`/services/${activeService.slug}`)}>View hairdressers and book</Link>
+                  <Link href={hairHref(`/services/${activeService.slug}`)}>Book appointment</Link>
                 </Button>
                 <Button asChild variant="outline">
                   <Link href={hairHref("/services")}>All appointments</Link>

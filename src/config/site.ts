@@ -16,6 +16,7 @@ export const storefrontRoutes = [
   "/services",
   "/services/[slug]",
   "/services/booking/success",
+  "/hairdressers/[id]",
   "/collections/[slug]",
   "/categories/[slug]",
   "/product/[slug]",
