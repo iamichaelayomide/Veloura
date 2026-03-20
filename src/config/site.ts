@@ -1,17 +1,21 @@
 export const siteConfig = {
   name: "Veloura",
-  description: "Luxury human hair crafted for presence, longevity, and easy confidence.",
-  announcement: "Complimentary Lagos delivery above NGN 250,000 and bespoke wig customization within 72 hours.",
-  phone: "+234 813 555 0188",
+  description: "Shop wigs, bundles, closures, and accessories that help you look finished, feel confident, and check out without stress.",
+  announcement: "Need help choosing? Shop online, send your order to WhatsApp, or visit our Lekki store for pickup and in-person guidance.",
+  phone: "0703 289 1651",
   email: "hello@veloura.co",
-  whatsapp: "https://wa.me/2348135550188",
+  whatsapp: "https://wa.me/2347032891651",
   instagram: "https://instagram.com/veloura.co",
   address: "12A Admiralty Way, Lekki Phase 1, Lagos",
+  maps: "https://www.google.com/maps/search/?api=1&query=12A+Admiralty+Way,+Lekki+Phase+1,+Lagos",
 } as const;
 
 export const storefrontRoutes = [
   "/",
   "/shop",
+  "/services",
+  "/services/[slug]",
+  "/services/booking/success",
   "/collections/[slug]",
   "/categories/[slug]",
   "/product/[slug]",
@@ -34,6 +38,7 @@ export const storefrontRoutes = [
   "/about",
   "/contact",
   "/faq",
+  "/sales",
   "/policies/shipping-policy",
   "/policies/return-policy",
   "/policies/privacy-policy",

@@ -70,6 +70,34 @@ export function searchProducts(query: string) {
   });
 }
 
+export function getSuggestedProducts(query: string) {
+  const normalizedQuery = query.trim().toLowerCase();
+  if (!normalizedQuery) return products.slice(0, 4);
+
+  const terms = normalizedQuery.split(/\s+/).filter(Boolean);
+
+  return products
+    .map((product) => {
+      const haystack = [
+        product.name,
+        product.shortDescription,
+        product.description,
+        product.categorySlug,
+        ...product.collectionSlugs,
+        ...product.variants.flatMap((variant) => Object.values(variant.attributes).filter(Boolean) as string[]),
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      const score = terms.reduce((total, term) => total + (haystack.includes(term) ? 1 : 0), 0);
+      return { product, score };
+    })
+    .filter((entry) => entry.score > 0)
+    .sort((left, right) => right.score - left.score)
+    .slice(0, 4)
+    .map((entry) => entry.product);
+}
+
 export const adminSeed = {
   customers,
   discounts,

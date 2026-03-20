@@ -7,7 +7,26 @@ export type ProductCategoryKey =
   | "closures"
   | "raw-hair"
   | "accessories"
-  | "hair-care";
+  | "hair-care"
+  | "ready-to-wear"
+  | "install-tools"
+  | "styling-essentials";
+
+export type FulfillmentMethod = "delivery" | "pickup";
+
+export type PaymentMethod = "paystack" | "transfer" | "whatsapp";
+
+export type CheckoutDetails = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  city: string;
+  state: string;
+  address: string;
+  note: string;
+  fulfillmentMethod: FulfillmentMethod;
+};
 
 export type VariantAttributeKey =
   | "length"
@@ -170,5 +189,35 @@ export type StoreMetric = {
   label: string;
   value: string;
   change: string;
+};
+
+export type ServiceCategoryKey = "hairdressing" | "lashes" | "pedicure";
+
+export type ServiceAvailabilitySlot = {
+  id: string;
+  date: string;
+  dayLabel: string;
+  time: string;
+  stylist: string;
+  available: boolean;
+};
+
+export type Service = {
+  id: string;
+  name: string;
+  slug: string;
+  categorySlug: ServiceCategoryKey;
+  shortDescription: string;
+  description: string;
+  durationMinutes: number;
+  price: number;
+  compareAtPrice?: number;
+  image: string;
+  gallery: string[];
+  includes: string[];
+  benefits: string[];
+  bookingNotes: string[];
+  availability: ServiceAvailabilitySlot[];
+  featured: boolean;
 };
 

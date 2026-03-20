@@ -5,15 +5,15 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-full border text-sm font-medium transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c58b74] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-40",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-full border text-sm font-medium transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(214,195,162,0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#090b11] disabled:pointer-events-none disabled:opacity-40",
   {
     variants: {
       variant: {
-        default: "border-[#c58b74] bg-[#c58b74] text-black hover:bg-[#d3a18d]",
-        secondary: "border-[#2a1815] bg-[#2a1815] text-[#f5ede7] hover:bg-[#3b2521]",
-        outline: "border-[#5b443c] bg-transparent text-[#f5ede7] hover:border-[#c58b74] hover:text-[#f9d1bd]",
-        ghost: "border-transparent bg-transparent text-[#f3e8df] hover:bg-white/6",
-        light: "border-[#d7c1b5] bg-[#f6efe9] text-[#241615] hover:bg-[#efe2d8]",
+        default: "border-[rgba(214,195,162,0.42)] bg-[linear-gradient(135deg,#f0e5cf,#c8b28f)] text-[#111319] hover:brightness-105",
+        secondary: "border-[rgba(125,211,199,0.18)] bg-[rgba(125,211,199,0.08)] text-[var(--veloura-text)] hover:bg-[rgba(125,211,199,0.14)]",
+        outline: "border-[var(--veloura-line)] bg-transparent text-[var(--veloura-text)] hover:border-[rgba(214,195,162,0.45)] hover:bg-white/5",
+        ghost: "border-transparent bg-transparent text-[var(--veloura-text)] hover:bg-white/6",
+        light: "border-[rgba(255,255,255,0.18)] bg-[rgba(248,244,236,0.95)] text-[#14161f] hover:bg-white",
       },
       size: {
         default: "h-11 px-5",

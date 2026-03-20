@@ -20,7 +20,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const discount = calculateDiscountPercent(product.basePrice, product.compareAtPrice);
 
   return (
-    <article className="group overflow-hidden rounded-[28px] border border-white/10 bg-[#120c0b]">
+    <article className="panel group overflow-hidden rounded-[30px]">
       <div className="relative">
         <Link href={hairHref(`/product/${product.slug}`)} className="block">
           <div className="relative aspect-[4/5] overflow-hidden">
@@ -37,20 +37,20 @@ export function ProductCard({ product }: ProductCardProps) {
         <button
           type="button"
           onClick={() => toggleItem(product.slug)}
-          className="absolute right-4 top-4 rounded-full border border-white/10 bg-black/30 p-2 text-white backdrop-blur"
+          className="absolute right-4 top-4 rounded-full border border-[var(--veloura-line)] bg-black/30 p-2 text-white backdrop-blur"
           aria-label="Toggle wishlist"
         >
-          <Heart className={`h-4 w-4 ${hasItem ? "fill-[#c58b74] text-[#c58b74]" : ""}`} />
+          <Heart className={`h-4 w-4 ${hasItem ? "fill-[var(--veloura-accent)] text-[var(--veloura-accent)]" : ""}`} />
         </button>
 
         <div className="absolute left-4 top-4 flex flex-wrap gap-2 pr-12">
           {product.badges.slice(0, 2).map((badge) => (
-            <span key={badge} className="rounded-full bg-[#f6efe9] px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-[#241615]">
+            <span key={badge} className="rounded-full bg-[rgba(247,245,239,0.92)] px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-[#181a22]">
               {getBadgeLabel(badge)}
             </span>
           ))}
           {discount ? (
-            <span className="rounded-full bg-[#c58b74] px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-black">
+            <span className="rounded-full bg-[var(--veloura-accent)] px-2.5 py-1 text-[10px] uppercase tracking-[0.22em] text-[#111319]">
               {discount}% off
             </span>
           ) : null}
@@ -59,20 +59,21 @@ export function ProductCard({ product }: ProductCardProps) {
 
       <div className="space-y-4 p-5">
         <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-[#9f8a82]">{product.categorySlug.replace("-", " ")}</p>
-          <Link href={hairHref(`/product/${product.slug}`)} className="mt-2 block text-lg text-[#f8efe8] transition group-hover:text-[#d8b3a2]">
+          <p className="text-xs uppercase tracking-[0.25em] text-[var(--veloura-muted)]">{product.categorySlug.replace("-", " ")}</p>
+          <Link href={hairHref(`/product/${product.slug}`)} className="mt-2 block text-lg text-[var(--veloura-text)] transition group-hover:text-[var(--veloura-accent)]">
             {product.name}
           </Link>
-          <p className="mt-2 text-sm leading-6 text-[#bca79d]">{product.shortDescription}</p>
+          <p className="mt-2 text-sm leading-6 text-[var(--veloura-muted)]">{product.shortDescription}</p>
+          <p className="mt-2 text-xs uppercase tracking-[0.2em] text-[var(--veloura-accent)]">Choose this if you want {product.variants[0]?.label.toLowerCase() ?? "a polished everyday finish"}</p>
         </div>
 
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="text-base font-medium text-[#f8efe8]">{formatPrice(product.basePrice)}</p>
-            {product.compareAtPrice ? <p className="text-sm text-[#8f7a71] line-through">{formatPrice(product.compareAtPrice)}</p> : null}
+            <p className="text-base font-medium text-[var(--veloura-text)]">{formatPrice(product.basePrice)}</p>
+            {product.compareAtPrice ? <p className="text-sm text-[var(--veloura-muted)] line-through">{formatPrice(product.compareAtPrice)}</p> : null}
           </div>
           <Button asChild size="sm" variant="ghost" className="border border-white/10">
-            <Link href={hairHref(`/product/${product.slug}`)}>View</Link>
+            <Link href={hairHref(`/product/${product.slug}`)}>See details</Link>
           </Button>
         </div>
       </div>

@@ -25,15 +25,15 @@ export function CartView() {
     <div className="grid gap-8 lg:grid-cols-[1.3fr_.7fr]">
       <div className="space-y-4">
         {items.map((item) => (
-          <div key={item.id} className="grid gap-4 rounded-[28px] border border-white/10 bg-[#120c0b] p-5 sm:grid-cols-[120px,1fr]">
+          <div key={item.id} className="panel grid gap-4 rounded-[28px] p-5 sm:grid-cols-[120px,1fr]">
             <div className="relative aspect-square overflow-hidden rounded-2xl">
               <Image src={item.image} alt={item.name} fill className="object-cover" sizes="120px" />
             </div>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <p className="text-lg text-[#f8efe8]">{item.name}</p>
-                <p className="mt-1 text-sm text-[#bca79d]">{item.variantLabel}</p>
-                <p className="mt-3 text-sm text-[#f8efe8]">{formatPrice(item.price)}</p>
+                <p className="text-lg text-[var(--veloura-text)]">{item.name}</p>
+                <p className="mt-1 text-sm text-[var(--veloura-muted)]">{item.variantLabel}</p>
+                <p className="mt-3 text-sm text-[var(--veloura-text)]">{formatPrice(item.price)}</p>
               </div>
               <div className="space-y-3">
                 <div className="flex items-center gap-2">
@@ -45,7 +45,7 @@ export function CartView() {
                     +
                   </button>
                 </div>
-                <button type="button" className="text-sm text-[#c58b74]" onClick={() => removeItem(item.id)}>
+                <button type="button" className="text-sm text-[var(--veloura-accent)]" onClick={() => removeItem(item.id)}>
                   Remove
                 </button>
               </div>
@@ -54,9 +54,9 @@ export function CartView() {
         ))}
       </div>
 
-      <div className="rounded-[28px] border border-white/10 bg-[#120c0b] p-6">
-        <h2 className="text-2xl text-[#f8efe8]">Order summary</h2>
-        <div className="mt-6 space-y-3 text-sm text-[#bca79d]">
+      <div className="panel rounded-[28px] p-6">
+        <h2 className="text-2xl text-[var(--veloura-text)]">Order summary</h2>
+        <div className="mt-6 space-y-3 text-sm text-[var(--veloura-muted)]">
           <div className="flex justify-between">
             <span>Subtotal</span>
             <span>{formatPrice(subtotal)}</span>
@@ -65,7 +65,7 @@ export function CartView() {
             <span>Shipping</span>
             <span>{shipping ? formatPrice(shipping) : "Free"}</span>
           </div>
-          <div className="flex justify-between border-t border-white/10 pt-3 text-base text-[#f8efe8]">
+          <div className="flex justify-between border-t border-[var(--veloura-line)] pt-3 text-base text-[var(--veloura-text)]">
             <span>Total</span>
             <span>{formatPrice(subtotal + shipping)}</span>
           </div>
