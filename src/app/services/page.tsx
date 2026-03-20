@@ -12,17 +12,17 @@ export default function ServicesPage() {
   const serviceSteps = [
     {
       title: "Choose a service",
-      copy: "Pick hairdressing, lashes, or pedicure based on what you need finished.",
+      copy: "Start with the appointment that matches the look or reset you want.",
       Icon: Sparkles,
     },
     {
-      title: "See availability",
-      copy: "Review the day, time, and stylist before you commit to the appointment.",
+      title: "Pick your stylist",
+      copy: "Open any service to compare available hairdressers, reviews, and next open dates.",
       Icon: CalendarDays,
     },
     {
       title: "Pay to book",
-      copy: "The booking is only confirmed after payment, so the slot stays tied to a real checkout step.",
+      copy: "Choose your day and time, then confirm the appointment with payment.",
       Icon: Clock3,
     },
   ];
@@ -31,11 +31,11 @@ export default function ServicesPage() {
     <div className="pb-16">
       <PageHero
         eyebrow="Services"
-        title="Book appointments for hair, lashes, and beauty services without leaving the site."
-        description="Choose the service you want, see the available days and time slots, then complete payment to lock the booking."
+        title="Book your appointment with the stylist and time that suit you."
+        description="Choose a service, compare available hairdressers, read reviews, and book the day and time you want."
         actions={
           <Button asChild>
-            <a href="#service-list">Browse services</a>
+            <a href="#service-list">Browse appointments</a>
           </Button>
         }
       />
@@ -56,7 +56,7 @@ export default function ServicesPage() {
 
       <section className="site-shell mt-10">
         <div className="panel rounded-[30px] p-6">
-          <p className="text-xs uppercase tracking-[0.28em] text-[var(--veloura-accent)]">Service categories</p>
+          <p className="text-xs uppercase tracking-[0.28em] text-[var(--veloura-accent)]">Appointment categories</p>
           <div className="mt-5 flex flex-wrap gap-2">
             {serviceCategories.map((category) => (
               <span key={category.id} className="rounded-full border border-[var(--veloura-line)] px-4 py-2 text-sm text-[var(--veloura-muted)]">
@@ -70,8 +70,8 @@ export default function ServicesPage() {
       <section className="site-shell mt-10">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="text-xs uppercase tracking-[0.28em] text-[var(--veloura-accent)]">Featured bookings</p>
-            <h2 className="mt-3 font-display text-4xl text-[var(--veloura-text)]">Start with the appointments people are most likely to book first.</h2>
+            <p className="text-xs uppercase tracking-[0.28em] text-[var(--veloura-accent)]">Most booked</p>
+            <h2 className="mt-3 font-display text-4xl text-[var(--veloura-text)]">Start with the appointments clients book most often.</h2>
           </div>
         </div>
         <div className="mt-8 grid gap-6 md:grid-cols-2">
@@ -83,8 +83,8 @@ export default function ServicesPage() {
 
       <section id="service-list" className="site-shell mt-10">
         <div className="panel rounded-[30px] p-6">
-          <p className="text-xs uppercase tracking-[0.28em] text-[var(--veloura-accent)]">All services</p>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--veloura-muted)]">Separate from products, this is the service lane. Use it when you want to book an appointment instead of buying physical hair or accessories.</p>
+          <p className="text-xs uppercase tracking-[0.28em] text-[var(--veloura-accent)]">All appointments</p>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--veloura-muted)]">Open any appointment to choose from the available hairdressers, see reviews, and lock your preferred date and time.</p>
         </div>
         <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {services.map((service) => (

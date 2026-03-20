@@ -59,6 +59,15 @@ export type Collection = {
   featuredProductSlugs: string[];
 };
 
+export type OccasionEdit = {
+  id: string;
+  slug: string;
+  name: string;
+  mood: string;
+  description: string;
+  productSlugs: string[];
+};
+
 export type ProductVariant = {
   id: string;
   sku: string;
@@ -198,8 +207,29 @@ export type ServiceAvailabilitySlot = {
   date: string;
   dayLabel: string;
   time: string;
+  stylistId: string;
   stylist: string;
   available: boolean;
+};
+
+export type ServiceStylistReview = {
+  id: string;
+  customer: string;
+  rating: number;
+  comment: string;
+  date: string;
+};
+
+export type ServiceStylist = {
+  id: string;
+  name: string;
+  title: string;
+  image: string;
+  bio: string;
+  specialties: string[];
+  rating: number;
+  reviewCount: number;
+  reviews: ServiceStylistReview[];
 };
 
 export type Service = {
@@ -217,6 +247,7 @@ export type Service = {
   includes: string[];
   benefits: string[];
   bookingNotes: string[];
+  stylists: ServiceStylist[];
   availability: ServiceAvailabilitySlot[];
   featured: boolean;
 };

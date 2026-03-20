@@ -1,29 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, ShieldCheck, Sparkles, Ticket, Truck } from "lucide-react";
+import { Check, ShieldCheck, Sparkles, Ticket, Truck } from "lucide-react";
 
 import { FaqList } from "@/components/storefront/faq-list";
+import { HomeOccasionShowcase } from "@/components/storefront/home-occasion-showcase";
+import { HomeServicesShowcase } from "@/components/storefront/home-services-showcase";
 import { HomeProductShowcase } from "@/components/storefront/home-product-showcase";
 import { NewsletterBlock } from "@/components/storefront/newsletter-block";
 import { ProductCard } from "@/components/storefront/product-card";
-import { ServiceCard } from "@/components/storefront/service-card";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Button } from "@/components/ui/button";
-import { categories, collections, homepageTestimonials, storefrontFaqs } from "@/data/catalog";
-import { getAllProducts, getBestSellerProducts, getFeaturedProducts, getNewArrivalProducts } from "@/lib/catalog";
+import { categories, homepageTestimonials, storefrontFaqs } from "@/data/catalog";
+import { getAllProducts, getBestSellerProducts, getFeaturedProducts, getNewArrivalProducts, getOccasionEdits } from "@/lib/catalog";
 import { getFeaturedServices } from "@/lib/services";
 import { hairHref } from "@/lib/routes";
 
-const serviceNotes = [
-  { title: "Shop with clarity", copy: "See the lengths, finishes, and details that help you decide faster." },
-  { title: "Get help fast", copy: "Ask questions on WhatsApp, choose transfer, or pay online without confusion." },
-  { title: "Leave with the right look", copy: "Pick ready-to-wear units, fuller wigs, or softer textures based on how you want to look." },
-];
-
 const trustPoints = [
-  { label: "Guidance when you are unsure what to buy", icon: Sparkles },
-  { label: "Delivery or pickup depending on what suits you", icon: Truck },
-  { label: "Simple support and payment options", icon: ShieldCheck },
+  { label: "Help choosing the right hair", icon: Sparkles },
+  { label: "Pickup or delivery available", icon: Truck },
+  { label: "Simple payment and support", icon: ShieldCheck },
 ];
 
 const homeAnchors = [
@@ -55,7 +50,7 @@ const startPaths = [
   },
   {
     title: "Get support",
-    copy: "Use FAQ, WhatsApp, pickup guidance, and store directions when you need help before buying.",
+    copy: "Use FAQ, WhatsApp, pickup guidance, and store directions when you want answers before paying.",
     href: hairHref("/faq"),
     cta: "Get answers",
   },
@@ -67,18 +62,19 @@ export default function HomePage() {
   const newArrivals = getNewArrivalProducts();
   const allProducts = getAllProducts();
   const featuredServices = getFeaturedServices();
+  const occasionEdits = getOccasionEdits();
 
   return (
     <div className="pb-16">
       <section className="site-shell pt-8">
         <div className="panel veloura-grid relative overflow-hidden rounded-[36px] px-5 py-7 md:rounded-[44px] md:px-10 md:py-12">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(214,195,162,0.14),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(125,211,199,0.14),transparent_20%)]" />
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_.9fr]">
-            <div className="relative z-10 space-y-7 animate-fade-up">
+          <div className="grid gap-8 lg:grid-cols-[1.08fr_.92fr]">
+            <div className="relative z-10 flex flex-col gap-5 animate-fade-up">
               <div className="panel-soft inline-flex rounded-full px-4 py-2 text-[11px] uppercase tracking-[0.36em] text-[var(--veloura-accent)]">
                 Luxury Hair And Beauty
               </div>
-              <div className="space-y-5">
+              <div className="space-y-4">
                 <h1 className="font-display text-4xl leading-[0.92] text-[var(--veloura-text)] sm:text-5xl md:text-7xl">
                   Find the hair
                   <br />
@@ -86,31 +82,13 @@ export default function HomePage() {
                   <br />
                   feel finished.
                 </h1>
-                <p className="max-w-2xl text-sm leading-7 text-[var(--veloura-muted)] md:text-base md:leading-8">
-                  Shop wigs, bundles, frontals, closures, and accessories with clearer detail, better support, and easier checkout paths so you can buy with less hesitation.
+                <p className="max-w-xl text-sm leading-7 text-[var(--veloura-muted)] md:text-base md:leading-8">
+                  Shop wigs, bundles, closures, and beauty appointments with clearer options, calmer support, and a faster path to booking or buying.
                 </p>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <Button asChild>
-                  <Link href={hairHref("/shop")}>Shop the collection</Link>
-                </Button>
-                <Button asChild variant="outline">
-                  <a href="https://www.google.com/maps/search/?api=1&query=12A+Admiralty+Way,+Lekki+Phase+1,+Lagos" target="_blank" rel="noreferrer">
-                    Get store directions
-                  </a>
-                </Button>
-              </div>
-              <div className="grid gap-3 md:grid-cols-3">
-                {serviceNotes.map((note) => (
-                  <div key={note.title} className="panel-soft rounded-[22px] p-4">
-                    <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">{note.title}</p>
-                    <p className="mt-3 text-sm leading-6 text-[var(--veloura-muted)]">{note.copy}</p>
-                  </div>
-                ))}
               </div>
             </div>
 
-            <div className="grid gap-4 md:gap-6">
+            <div className="order-3 grid gap-4 md:gap-6 lg:order-2">
               <div className="relative overflow-hidden rounded-[28px] border border-[var(--veloura-line)] md:animate-float md:rounded-[34px]">
                 <div className="relative aspect-[4/5]">
                   <Image src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80" alt="Veloura editorial luxury hair" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 40vw" />
@@ -118,18 +96,28 @@ export default function HomePage() {
                   <div className="absolute inset-x-0 bottom-0 p-5 md:p-6">
                     <p className="text-xs uppercase tracking-[0.3em] text-[var(--veloura-accent)]">Private Client Edit</p>
                     <h2 className="mt-3 font-display text-3xl text-[var(--veloura-text)] md:text-4xl">Choose the look people notice first.</h2>
-                    <p className="mt-3 max-w-md text-sm leading-7 text-[var(--veloura-muted)]">From fuller wigs to softer bundles and polished finishing pieces, this is where you shop when you want your hair to look intentional, not average.</p>
+                    <p className="mt-3 max-w-md text-sm leading-7 text-[var(--veloura-muted)]">From fuller wigs to softer bundles and polished finishing pieces, this is where you come when you want the whole look to feel intentional.</p>
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
+            <div className="order-2 space-y-4 lg:order-3">
+              <div className="flex flex-wrap gap-3">
+                <Button asChild>
+                  <Link href={hairHref("/shop")}>Shop the collection</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href={hairHref("/services")}>Book an appointment</Link>
+                </Button>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-3">
                 {trustPoints.map((point) => {
                   const Icon = point.icon;
                   return (
-                    <div key={point.label} className="panel-soft rounded-[22px] p-5 md:rounded-[26px]">
+                    <div key={point.label} className="panel-soft rounded-[22px] p-4 md:rounded-[26px]">
                       <Icon className="h-5 w-5 text-[var(--veloura-accent)]" />
-                      <p className="mt-4 text-sm leading-7 text-[var(--veloura-text)]">{point.label}</p>
+                      <p className="mt-3 text-sm leading-6 text-[var(--veloura-text)]">{point.label}</p>
                     </div>
                   );
                 })}
@@ -170,44 +158,9 @@ export default function HomePage() {
         <div className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">{bestSellers.map((product) => <ProductCard key={product.id} product={product} />)}</div>
       </section>
 
-      <section id="services" className="site-shell pt-14">
-        <div className="grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
-          <div className="panel rounded-[30px] p-6 md:rounded-[34px] md:p-8">
-            <SectionHeading eyebrow="Services" title="Need an appointment, not a product?" description="Book hairdressing, lash, and pedicure services in a separate service lane with visible time slots and payment-confirmed booking." />
-            <div className="mt-6 space-y-4">
-              {["Choose a service category first", "See available day and time before paying", "Use payment to lock the booking"].map((item) => (
-                <div key={item} className="flex items-center gap-3 text-sm text-[var(--veloura-muted)]">
-                  <Check className="h-4 w-4 text-[var(--veloura-highlight)]" />
-                  <span>{item}</span>
-                </div>
-              ))}
-            </div>
-            <Button asChild className="mt-6">
-              <Link href={hairHref("/services")}>Browse services</Link>
-            </Button>
-          </div>
-          <div className="grid gap-6 md:grid-cols-2">
-            {featuredServices.map((service) => (
-              <ServiceCard key={service.id} service={service} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <HomeServicesShowcase services={featuredServices} />
 
-      <section className="site-shell pt-14">
-        <div className="grid gap-6 lg:grid-cols-[1.02fr_.98fr]">
-          <div className="panel rounded-[30px] p-6 md:rounded-[34px] md:p-8">
-            <SectionHeading eyebrow={collections[2].eyebrow} title="Shop by the occasion you are dressing for." description="If you are buying for a birthday, bridal event, trip, or content day, this edit helps you go straight to the options that already feel dressed up." />
-            <p className="mt-6 text-sm leading-7 text-[var(--veloura-muted)]">
-              When you do not want to overthink it, start with these lengths, finishes, and accessory picks that make event hair easier to pull together.
-            </p>
-            <Button asChild className="mt-8">
-              <Link href={hairHref(`/collections/${collections[2].slug}`)}>Shop by occasion</Link>
-            </Button>
-          </div>
-          <div className="grid gap-6 sm:grid-cols-2">{featuredProducts.map((product) => <ProductCard key={product.id} product={product} />)}</div>
-        </div>
-      </section>
+      <HomeOccasionShowcase occasions={occasionEdits} />
 
       <section className="site-shell pt-14">
         <SectionHeading eyebrow="New Arrivals" title="See what is new before it sells through." description="Fresh textures, ready-to-wear options, and accessories for shoppers who want newer drops first." />

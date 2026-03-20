@@ -17,15 +17,15 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
   return (
     <div className="pb-16">
       <PageHero
-        eyebrow="Service Booking"
+        eyebrow="Appointment"
         title={service.name}
-        description={`${service.shortDescription} Payment confirms the appointment, so you can choose your slot and finish the booking in one flow.`}
+        description={`${service.shortDescription} Choose from available hairdressers, read reviews, and book your preferred day and time in one flow.`}
       />
 
       <section className="site-shell mt-10 grid gap-8 lg:grid-cols-[1fr_.9fr]">
         <div className="space-y-6">
           <div className="panel rounded-[30px] p-6">
-            <h2 className="font-display text-4xl text-[var(--veloura-text)]">What this service helps you do</h2>
+            <h2 className="font-display text-4xl text-[var(--veloura-text)]">What to expect</h2>
             <p className="mt-4 text-sm leading-7 text-[var(--veloura-muted)]">{service.description}</p>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <div>
@@ -59,7 +59,7 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
         </div>
 
         <div className="panel h-fit rounded-[30px] p-6 lg:sticky lg:top-28">
-          <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Service summary</p>
+          <p className="text-xs uppercase tracking-[0.24em] text-[var(--veloura-accent)]">Appointment summary</p>
           <div className="mt-5 space-y-3 text-sm text-[var(--veloura-muted)]">
             <div className="flex justify-between">
               <span>Price</span>
@@ -70,7 +70,11 @@ export default async function ServiceDetailPage({ params }: { params: Promise<{ 
               <span>{service.durationMinutes} mins</span>
             </div>
             <div className="flex justify-between">
-              <span>Slots available</span>
+              <span>Hairdressers</span>
+              <span>{service.stylists.length}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Open times</span>
               <span>{service.availability.filter((slot) => slot.available).length}</span>
             </div>
           </div>

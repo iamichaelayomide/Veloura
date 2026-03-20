@@ -22,7 +22,7 @@ export function ServiceCard({ service }: { service: Service }) {
       </div>
       <div className="space-y-4 p-5">
         <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-[var(--veloura-muted)]">Service booking</p>
+          <p className="text-xs uppercase tracking-[0.22em] text-[var(--veloura-muted)]">Appointment</p>
           <h3 className="mt-2 text-2xl text-[var(--veloura-text)]">{service.name}</h3>
           <p className="mt-3 text-sm leading-7 text-[var(--veloura-muted)]">{service.shortDescription}</p>
         </div>
@@ -34,7 +34,7 @@ export function ServiceCard({ service }: { service: Service }) {
           <span className="text-[var(--veloura-text)]">{formatPrice(service.price)}</span>
         </div>
         <Button asChild className="w-full">
-          <Link href={hairHref(`/services/${service.slug}`)}>Book this service</Link>
+          <Link href={hairHref(`/services/${service.slug}`)}>View hairdressers and book</Link>
         </Button>
       </div>
     </article>

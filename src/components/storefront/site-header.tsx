@@ -47,22 +47,10 @@ function MobileMenu({
   open: boolean;
   onClose: () => void;
 }) {
-  const [mounted, setMounted] = useState(false);
   const [productsOpen, setProductsOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (open) {
-      setProductsOpen(false);
-      setServicesOpen(false);
-    }
-  }, [open]);
-
-  if (!mounted || !open) return null;
+  if (!open || typeof document === "undefined") return null;
 
   return createPortal(
     <div className="fixed inset-0 z-[999] lg:hidden">
@@ -343,7 +331,7 @@ export function SiteHeader() {
           </div>
         </div>
       </header>
-      <MobileMenu open={open} onClose={() => setOpen(false)} />
+      <MobileMenu key={open ? "mobile-menu-open" : "mobile-menu-closed"} open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

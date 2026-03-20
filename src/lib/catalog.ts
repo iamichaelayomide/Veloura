@@ -1,4 +1,5 @@
-import { categories, collections, customers, discounts, homepageSections, orders, products, storefrontFaqs } from "@/data/catalog";
+import { categories, collections, customers, discounts, homepageSections, occasionEdits, orders, products, storefrontFaqs } from "@/data/catalog";
+import type { Product } from "@/types";
 
 export function getAllProducts() {
   return products;
@@ -34,6 +35,15 @@ export function getProductsByCategory(slug: string) {
 
 export function getProductsByCollection(slug: string) {
   return products.filter((product) => product.collectionSlugs.includes(slug));
+}
+
+export function getOccasionEdits() {
+  return occasionEdits.map((occasion) => ({
+    ...occasion,
+    products: occasion.productSlugs
+      .map((productSlug) => products.find((product) => product.slug === productSlug))
+      .filter((product): product is Product => Boolean(product)),
+  }));
 }
 
 export function getRelatedProducts(slug: string) {
