@@ -26,7 +26,7 @@ export function HomeOccasionShowcase({ occasions }: { occasions: OccasionWithPro
   }
 
   return (
-    <section className="site-shell pt-10 md:pt-12">
+    <section className="site-shell pt-8 md:pt-10">
       <div className="grid items-start gap-6 lg:grid-cols-[0.88fr_1.12fr]">
         <div className="panel self-start rounded-[30px] p-6 md:rounded-[34px] md:p-8">
           <SectionHeading

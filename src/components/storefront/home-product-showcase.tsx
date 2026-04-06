@@ -30,15 +30,26 @@ export function HomeProductShowcase({
   }, [activeCategory, products]);
 
   return (
-    <section id="products" className="site-shell pt-10 md:pt-12">
-      <div className="grid items-start gap-6 lg:grid-cols-[.95fr_1.05fr]">
-        <div className="panel self-start rounded-[30px] p-6 md:rounded-[34px] md:p-8">
-          <SectionHeading
-            eyebrow="Products"
-            title="Start with a category, then let the page narrow the products for you."
-            description="Tap a category below to filter what you are seeing here without leaving the homepage."
-          />
-          <div className="mt-6 flex flex-wrap gap-2">
+    <section id="products" className="site-shell pt-8 md:pt-10">
+      <div className="panel rounded-[30px] p-5 md:rounded-[34px] md:p-6">
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeading
+              eyebrow="Products"
+              title="Start with a category, then let the page narrow the products for you."
+              description="Use the filters first, then open the full shop only if you want a wider browse."
+            />
+            <div className="flex flex-wrap gap-3 lg:justify-end">
+              <Button asChild>
+                <Link href={hairHref("/shop")}>Open full shop</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link href={hairHref("/categories")}>View all categories</Link>
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={() => setActiveCategory("all")}
@@ -65,21 +76,13 @@ export function HomeProductShowcase({
               </button>
             ))}
           </div>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild>
-              <Link href={hairHref("/shop")}>Open full shop</Link>
-            </Button>
-            <Button asChild variant="outline">
-              <Link href={hairHref("/categories")}>View all categories</Link>
-            </Button>
-          </div>
         </div>
+      </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+      <div className="mt-6 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </section>
   );
