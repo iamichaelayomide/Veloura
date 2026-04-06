@@ -150,7 +150,7 @@ export default function HomePage() {
 
       <HomeProductShowcase categories={categories} products={allProducts} />
 
-      <section className="site-shell pt-14">
+      <section className="site-shell pt-10 md:pt-12">
         <SectionHeading eyebrow="Best Sellers" title="Start here if you want the safest picks." description="These are the wigs and textures shoppers keep choosing when they want fullness, softness, and a finish that looks worth the money." />
         <div className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">{bestSellers.map((product) => <ProductCard key={product.id} product={product} />)}</div>
       </section>
@@ -159,12 +159,12 @@ export default function HomePage() {
 
       <HomeOccasionShowcase occasions={occasionEdits} />
 
-      <section className="site-shell pt-14">
+      <section className="site-shell pt-10 md:pt-12">
         <SectionHeading eyebrow="New Arrivals" title="See what is new before it sells through." description="Fresh textures, ready-to-wear options, and accessories for shoppers who want newer drops first." />
         <div className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">{newArrivals.map((product) => <ProductCard key={product.id} product={product} />)}</div>
       </section>
 
-      <section id="sales-support" className="site-shell pt-14">
+      <section id="sales-support" className="site-shell pt-10 md:pt-12">
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="panel rounded-[30px] p-6">
             <Ticket className="h-5 w-5 text-[var(--veloura-accent)]" />
@@ -195,7 +195,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="site-shell pt-14">
+      <section className="site-shell pt-10 md:pt-12">
         <SectionHeading eyebrow="Reviews" title="See why other shoppers were confident buying here." description="Quick feedback from customers who wanted fuller units, easier checkout, and a more premium finish." />
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
           {homepageTestimonials.map((testimonial) => (
@@ -212,7 +212,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="faq" className="site-shell pt-14">
+      <section id="faq" className="site-shell pt-10 md:pt-12">
         <SectionHeading eyebrow="FAQ" title="Get the answers you need before you spend." description="Read through delivery, pickup, payment, customisation, and aftercare details if you want fewer surprises after checkout." />
         <div className="mt-8">
           <FaqList items={storefrontFaqs.slice(0, 3)} />
@@ -224,11 +224,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="site-shell pt-14">
+      <section className="site-shell pt-10 md:pt-12">
         <NewsletterBlock />
       </section>
 
-      <section id="visit-store" className="site-shell pt-14">
+      <section id="visit-store" className="site-shell pt-10 md:pt-12">
         <div className="panel rounded-[30px] p-6 md:rounded-[34px] md:p-8">
           <SectionHeading eyebrow="Walk-In Store" title="Prefer to come in physically first?" description="Visit the Lekki store for walk-in questions, showroom pickup, or in-person help before you place the order." />
           <div className="mt-6 grid gap-6 md:grid-cols-2">

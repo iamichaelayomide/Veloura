@@ -30,9 +30,9 @@ export function HomeProductShowcase({
   }, [activeCategory, products]);
 
   return (
-    <section id="products" className="site-shell pt-14">
-      <div className="grid gap-6 lg:grid-cols-[.95fr_1.05fr]">
-        <div className="panel rounded-[30px] p-6 md:rounded-[34px] md:p-8">
+    <section id="products" className="site-shell pt-10 md:pt-12">
+      <div className="grid items-start gap-6 lg:grid-cols-[.95fr_1.05fr]">
+        <div className="panel self-start rounded-[30px] p-6 md:rounded-[34px] md:p-8">
           <SectionHeading
             eyebrow="Products"
             title="Start with a category, then let the page narrow the products for you."

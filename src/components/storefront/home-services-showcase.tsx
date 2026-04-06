@@ -26,9 +26,9 @@ export function HomeServicesShowcase({ services }: { services: Service[] }) {
   const firstOpenSlot = activeService.availability.find((slot) => slot.available);
 
   return (
-    <section id="services" className="site-shell pt-14">
-      <div className="grid gap-6 lg:grid-cols-[0.78fr_1.22fr]">
-        <div className="panel rounded-[30px] p-6 md:p-8">
+    <section id="services" className="site-shell pt-10 md:pt-12">
+      <div className="grid items-start gap-6 lg:grid-cols-[0.78fr_1.22fr]">
+        <div className="panel self-start rounded-[30px] p-6 md:p-8">
           <SectionHeading
             eyebrow="Appointments"
             title="Tap a service and the details change."
